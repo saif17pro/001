@@ -1,0 +1,142 @@
+<html>
+<head>
+	<script type="text/javascript">
+		var ob = new XMLHttpRequest() ;
+		var d = null;
+		function getdata()
+		{
+			if(ob)
+			{
+				 ob.open("POST",'data.php');
+				 
+				 ob.onreadystatechange=function()
+				 {
+				 	if(ob.readyState==4 && ob.status==200)
+				 	{
+				 		d=document.getElementById('mydiv');
+				 		d.innerHTML=ob.responseText;
+				 	}
+				 }
+				 ob.send(d);
+			}
+			else
+			{
+				alert("file error");
+			}
+		}
+	</script>
+</head>
+<body>
+<form method="POST">
+	<input type="button" value="fetch" onclick="getdata()">
+</form>
+<div id="mydiv">
+	<p>Response message</p>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+<html>
+<head>
+	<script type="text/javascript">
+		var ob = new XMLHttpRequest() ;
+		
+		function getdata()
+		{
+			if(ob)
+			{
+				 ob.open("GET",'data.php');
+				 ob.onreadystatechange=function()
+				 {
+				 	if(ob.readyState==4 && ob.status==200)
+				 	{
+				 		var d=document.getElementById('mydiv');
+				 		d.innerHTML=ob.responseText;
+				 	}
+				 }
+				 ob.send(null);
+			}
+			else
+			{
+				alert("file error");
+			}
+		}
+	</script>
+</head>
+<body>
+<form>
+	<input type="button" value="fetch" onclick="getdata()">
+</form>
+<div id="mydiv">
+	<p>Response message</p>
+</div>
+</body>
+</html>
+
+
+
+
+<html>
+<!-- Mats_ Ajax First -->
+<head>
+<script type="text/javascript" language="javascript">
+	var ReqObj = false ;
+
+	if(window.XMLHttpRequest)
+	{
+		//Chrome, Firefox, Safari
+		ReqObj = new XMLHttpRequest() ;
+	} else if(window.ActiveXObject){
+		ReqObj = new ActiveXObject("Microsoft.XMLHTTP") ;
+	}
+
+	function getdata(dataSource,DivID)
+	//DivID for catching the response and to display
+	//dataSource is file to access on server
+	{
+		if(ReqObj)
+		{
+			// All Sendeng Rquest code 
+
+			//establish connection 
+			ReqObj.open("GET",dataSource) ;
+			ReqObj.onreadystatechange = function ()
+			{
+			//onreadystate is the property we are assining something by anonymous function
+				if(ReqObj.readyState == 4 && ReqObj.status = 200)
+				//readystate is a property with value 4 and status 200 means successful
+				{
+					var d = document.getElementById('DivID') ;
+					d.innerHTML(ReqObj.responseText) ; //geting response as text or xml with ReqObj.responseXML
+				}
+			}
+
+			ReqObj.send(null) ; //if not sending any data
+		}
+		else
+		{
+			window.alert("Request Object not created.") ;
+		}
+
+	}
+
+</script>
+</head>
+
+<body>
+	<h1> Working with AJAX </h1>
+	<form>
+		<input type="button" name="" value="fetch message" onclick="getdata('data.php','mydiv')" >
+		<div id="mydiv" >
+			<p> Response Message will be Displayed </p>
+		</div>
+	</form>
+
+</body>
+</html>

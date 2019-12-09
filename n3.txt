@@ -1,0 +1,99 @@
+
+<?php
+$uname=$_POST['uname'];
+//$uname="sneha";
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="ajaxdb";
+$conn=mysqli_connect($servername,$username,$password,$dbname);
+if(!$conn)
+{
+	die("Connection failed:".mysqli_connect_error());
+}
+else
+{
+	echo("Connected successfully");
+	$dis="SELECT * FROM ajax where username like '$uname'";
+	$results=mysqli_query($conn,$dis);
+	/*foreach($results as $b)
+	{
+		foreach($b as $v)
+		{
+			echo("$v<br>");
+		}
+	}*/
+	if(mysqli_num_rows($results)>=1)
+	{
+		echo("Alredy Exist");
+	}
+	else
+	{
+			$insert="INSERT INTO ajax (username) VALUES ('$uname')";
+			if(mysqli_query($conn,$insert))
+			{
+				echo("Successfully Inserted");
+			}
+			else
+			{
+				echo("Error:".mysqli_connect_error());
+			}
+	}
+}
+
+?>
+
+
+
+
+
+
+<html>
+<head>
+<script type="text/javascript" language="javascript">
+var Reqobj=false;
+if(window.XMLHttpRequest)
+{
+	Reqobj=new XMLHttpRequest();
+}
+else if(window.ActiveXobject)
+{
+	Reqobj=new ActiveXObject("Microsoft.XMLHTTP");
+}
+function getdata(dataSource,DivId) 
+{
+		if(Reqobj)
+		{
+			 var msg=document.getElementById('t1').value;
+			Reqobj.open("POST",dataSource);
+			Reqobj.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			Reqobj.onreadystatechange=function()
+			{
+				if(Reqobj.readyState==4 && Reqobj.status==200)
+				{
+					var d=document.getElementById(DivId);
+					d.innerHTML=Reqobj.responseText;
+				}
+			}
+			Reqobj.send("uname="+msg);
+		}
+		else{
+			alert("Error:Request Object not created");
+		}
+	}
+</script>
+</head>
+<body>
+<h1>Working with AJAX</h1>
+<form>
+Username:<input type="text" id='t1' name="uname" placeholder="username"><br>
+
+<input type="button" value="Fetch message" onclick="getdata('ajaxdata.php','mydiv')">
+<!--<input type="button" value="Fetch message" onclick="getdata('data.php','mydiv',2)">-->
+</form>
+<div id="mydiv">
+<p>Response message will be displayed by user</p>
+</div>
+
+</body>
+</html>

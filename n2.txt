@@ -1,0 +1,126 @@
+<html>
+<head>
+<script type="text/javascript">
+var ob=false;
+if(window.XMLHttpRequest)
+{
+	ob=new XMLHttpRequest();
+}
+else if(window.ActiveXObject)
+{
+	ob= new ActiveXOject("Microsoft.XMLHTTP");
+}
+function getdata(datasource,mydiv,data)
+{
+	if(ob)
+	{
+		ob.open("GET",datasource);
+		//ob.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		ob.onreadystatechange=function()
+		{
+			if(ob.readyState==4 && ob.status==200)
+			{
+				var d=document.getElementById(mydiv);
+				d.innerHTML=ob.responseText;
+			}
+	    }
+	   ob.send(null);
+	}
+	else
+	{
+		alert("ERROR:request object not created..");
+	}
+}
+</script>
+</head>
+<body>
+<h1>MESSAGE</h1>
+<form >
+<input type="button" name="button" value="fetch message" onclick="getdata('q3.php?data=1','mydiv')">
+<input type="button" value="fetch message" name="button" onclick="getdata('q3.php?data=2','mydiv')">
+
+</form>
+<div id="mydiv">
+<p>reponse message displayed here</p>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+<html>
+<head>
+<script type="text/javascript">
+var ob=false;
+if(window.XMLHttpRequest)
+{
+	ob=new XMLHttpRequest();
+}
+else if(window.ActiveXObject)
+{
+	ob= new ActiveOject("Microsoft.XMLHTTP");
+}
+function getdata(datasource,mydiv,data)
+{
+	if(ob)
+	{
+		ob.open("POST",datasource);
+		ob.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		ob.onreadystatechange=function()
+		{
+			if(ob.readyState==4 && ob.status==200)
+			{
+				var d=document.getElementById(mydiv);
+				d.innerHTML=ob.responseText;
+			}
+	    }
+	   ob.send('data='+data);
+	}
+	else
+	{
+		alert("ERROR:request object not created..");
+	}
+}
+</script>
+</head>
+<body>
+<h1>MESSAGE</h1>
+<form >
+<input type="button" name="button" value="fetch message" onclick="getdata('q4.php','mydiv',1)">
+<input type="button" value="fetch message" name="button" onclick="getdata('q4.php','mydiv',2)">
+
+</form>
+<div id="mydiv">
+<p>reponse message displayed here</p>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<?php
+if($_GET['data']==1)
+{
+	echo "recieved 1";
+
+}
+if($_GET['data']==2)
+{
+	echo "recived 2";
+}
+
+
+?>
+
+
